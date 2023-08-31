@@ -1,45 +1,34 @@
+#include "holberton.h"
 /**
- * _sqrt_recursion_wrapper - a wrapper that does the recursion bit
+ * _alcuadrado - give me the square root of a
  *
- * @n : input number
- * @min: minimum number to guess
- * @max: maximum number to guess
- *
- * Return: square root of @n or -1
-*/
-int _sqrt_recursion_wrapper(int n, int min, int max)
+ * @n: the given number
+ * @corre: from 0 up looking for square always less than the half of the number
+ * Return: if does not have square or corre if it find it
+ */
+int _alcuadrado(int corre, int n)
 {
-	int guess, guess_squared;
-
-	guess = (min + max) / 2;		/*get guess (g)*/
-	guess_squared = guess * guess;		/*square guess (sg)*/
-
-	if (guess_squared == n)			/*if squared guess == n return guess*/
-		return (guess);
-	else if (min == max)			/*this means n doesn't have a perfect square*/
+	if (corre < 0)
 		return (-1);
-	else if (guess_squared < n)		/*overshoot g if sg is less than the n*/
-		return (_sqrt_recursion_wrapper(n, guess + 1, max));
-	else					/*undershoot g if sg is more than the n*/
-		return (_sqrt_recursion_wrapper(n, min, guess - 1));
+	if (corre == 1)
+		return (1);
+	if (n > corre / 2)
+		return (-1);
+	if (corre != n * n)
+		return (_alcuadrado(corre, n + 1));
+	if (corre == n * n)
+		return (n);
+	return (-1);
 }
-
 /**
- * _sqrt_recursion - a function that returns the natural
- *                   square root of a number
+ * _sqrt_recursion - return de square root of a natural number
  *
- * @n: input number
+ * @n: to check
  *
- * Return: square root
-*/
+ * Return: the square root or -1 if it does not have
+ */
+
 int _sqrt_recursion(int n)
 {
-	if (n == 1)		/*sqrt(1) == 1*/
-		return (1);
-	else if (n == 0)	/*sqrt(0) == 0*/
-		return (0);
-	else if (n < 0)		/*sqrt(-n) == -1 (NA)*/
-		return (-1);
-	else
-		return (_sqrt_recursion_wrapper(n, 1, n));
+	return (_alcuadrado(n, 0));
 }
